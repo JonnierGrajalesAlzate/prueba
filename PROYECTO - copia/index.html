@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./estilo/index.css"> 
+  <title>Mi Sitio Web</title>
+</head>
+<body>
+  <!-- Botón hamburguesa -->
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+
+  <!-- Menú lateral -->
+  <div class="sidebar hidden" id="sidebar">
+    <h2>Menú</h2>
+    <a href="#">Inicio</a>
+    <a href="#">Formulario</a>
+    <a href="#">Empresas</a>
+    <a href="#">Redes sociales</a>
+    <a href="./registro.html">Registrarse</a>
+
+    <!-- Flecha de cierre -->
+    <button class="close-arrow hidden" id="closeArrow" onclick="toggleMenu()">←</button>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="main-content" id="mainContent">
+    <div class="banner">
+      <h1>Mi Marca</h1>
+      <p>Bienvenido, <span id="usuarioNombre">Cargando...</span>!</p>
+    </div>
+
+    <div class="section">
+      <p>Somos una empresa dedicada al desarrollo de soluciones tecnológicas a la medida...</p>
+    </div>
+
+    <div class="section">
+      <h2>¿Cómo funciona?</h2>
+      <p>Nuestro sistema permite a las empresas registrarse y mostrar sus servicios...</p>
+    </div>
+
+    <div class="section">
+      <h2>Postulación Empresas</h2>
+      <div class="postulacion">
+        <img src="img/form.png" alt="Imagen empresa" />
+        <div class="postulacion-content">
+          <button onclick="alert('Formulario abierto')">Abrir</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Filtrar Búsqueda</h2>
+      <form class="filter-form">
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <select id="nombre">
+            <option value="">Seleccione un nombre</option>
+            <option value="empresa1">Empresa 1</option>
+            <option value="empresa2">Empresa 2</option>
+            <option value="empresa3">Empresa 3</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="categoria">Categoría:</label>
+          <select id="categoria">
+            <option value="">Seleccione una categoría</option>
+            <option value="salud">Salud</option>
+            <option value="educacion">Educación</option>
+            <option value="tecnologia">Tecnología</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="ciudad">Ciudad:</label>
+          <select id="ciudad">
+            <option value="">Seleccione una ciudad</option>
+            <option value="medellin">Medellín</option>
+            <option value="bogota">Bogotá</option>
+            <option value="cali">Cali</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="servicio">Servicios:</label>
+          <select id="servicio">
+            <option value="">Seleccione un servicio</option>
+            <option value="asesoria">Asesoría</option>
+            <option value="soporte">Soporte</option>
+            <option value="capacitación">Capacitación</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div class="section">
+      <h2>Empresas Registradas</h2>
+      <div id="tarjetas-container" class="tarjetas-container">
+        <div id="empresas"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/principal.js"></script>
+</body>
+</html>
