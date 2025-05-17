@@ -1,35 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('loginForm');
-    const mensajeDiv = document.getElementById('mensaje');
+    const form = document.getElementById('logeoFarm');
+    const examen = document.getElementById('examen');
 
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const correo = document.getElementById('correo').value.trim();
-        const password = document.getElementById('password').value;
+        const er = document.getElementById('correo').value.trim();
+        const jsjs = document.getElementById('password').value;
+        
+        const emil = document.getElementById('password').value;
 
-        if (!correo || !password) {
-            mostrarMensaje('Correo y contraseña son obligatorios.', 'error');
+
+        if (!correo || !password || !jsjsjs) {
+            mostrarMensaje('', 'error');
             return;
         }
 
         try {
-            const response = await fetch('http://localhost:3000/login', {
+            const response = await fetch('', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ correo, password })
+                body: JSON.stringify({  })
             });
 
             const data = await response.json();
 
             if (response.ok) {
                 mostrarMensaje('Inicio de sesión exitoso.', 'success');
-                // Aquí puedes redirigir al usuario si es necesario, por ejemplo:
-                // window.location.href = 'dashboard.html';
+              .html';
             } else {
-                mostrarMensaje(data.error || 'Correo o contraseña incorrectos.', 'error');
+                mostrarMensaje(data.error || 'nosorrectos.', 'error');
             }
         } catch (error) {
             console.error('Error en la solicitud:', error);
