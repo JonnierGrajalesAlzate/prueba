@@ -1,19 +1,18 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const nombreUsuario = localStorage.getItem('usuarioNombre');
-  const spanNombre = document.getElementById('usuarioNombre');
+document.getElementById('btnCerrar').addEventListener('click', async () => {
+    try {
+        const response = await fetch('http://localhost:3000/logout', {
+            method: 'POST'
+        });
 
-  if (nombreUsuario) {
-    spanNombre.textContent = nombreUsuario;
-  } else {
-    spanNombre.textContent = 'Invitado';
-  
-    window.location.href = '../index.html';
-  }
+        const data = await response.json();
 
-  const btnCerrar = document.getElementById('cerrarSesion');
-  btnCerrar.addEventListener('click', () => {
-    localStorage.removeItem('usuarioNombre'); // 
-    window.location.href = '../index.html'; 
-  });
+        if (response.ok) {
+            localStorage.removeItem('usuario');
+            window.location.href = '../index.html';
+        } else {
+            alert(data.error || 'Error al cerrar sesión');
+        }
+    } catch (error) {
+        console.error('Error al cerrar sesión:', error);
+    }
 });
-
