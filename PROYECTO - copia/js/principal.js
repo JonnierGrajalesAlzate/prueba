@@ -1,54 +1,44 @@
-document.addEventListener('DOMContentLoaded', function () {
-    const empresasContainer = document.getElementById('empresas');
-    const usuarioNombreElement = document.getElementById('usuarioNombre');
-  
-    // Mostrar nombre del usuario (desde localStorage)
-    const usuarioNombre = localStorage.getItem('usuarioNombre');
-    usuarioNombreElement.textContent = usuarioNombre || 'Invitado';
-  
-    // Cargar empresas desde el backend
-    fetch('http://localhost:3000/empresas')
-      .then(response => response.json())
-      .then(empresas => {
-        mostrarEmpresas(empresas);
-      })
-      .catch(error => {
-        console.error('Error al cargar empresas:', error);
-      });
-  
-    // Mostrar tarjetas de empresas
-    function mostrarEmpresas(empresas) {
-      empresasContainer.innerHTML = '';
-      empresas.forEach(empresa => {
-        const div = document.createElement('div');
-        div.classList.add('tarjeta');
-        div.innerHTML = `
-          <h3>${empresa.nombre}</h3>
-          <p><strong>NIT:</strong> ${empresa.nit}</p>
-          <p><strong>Descripción:</strong> ${empresa.descripcion || ''}</p>
-          <button class="btn-ver" onclick="verDetalles('${empresa.nit}')">Ver detalles</button>
-        `;
-        empresasContainer.appendChild(div);
-      });
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('loginForm');
+    const mensajeDiv = document.getElementById('mensaje');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const correo = document.getElementById('correo').value.trim();
+        const password = document.getElementById('password').value;
+
+        if (!correo || !password) {
+            mostrarMensaje('Correo y contraseña son obligatorios.', 'error');
+            return;
+        }
+
+        try {
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ correo, password })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                mostrarMensaje('Inicio de sesión exitoso.', 'success');
+                // Aquí puedes redirigir al usuario si es necesario, por ejemplo:
+                // window.location.href = 'dashboard.html';
+            } else {
+                mostrarMensaje(data.error || 'Correo o contraseña incorrectos.', 'error');
+            }
+        } catch (error) {
+            console.error('Error en la solicitud:', error);
+            mostrarMensaje('Error de conexión con el servidor.', 'error');
+        }
+    });
+
+    function mostrarMensaje(texto, tipo) {
+        mensajeDiv.textContent = texto;
+        mensajeDiv.className = tipo === 'success' ? 'mensaje-exito' : 'mensaje-error';
     }
-  });
-  
-  // Redirigir a empresa.html con el NIT
-  function verDetalles(nit) {
-    window.location.href = `empresa.html?nit=${encodeURIComponent(nit)}`;
-  }
-  
-  // Toggle del menú lateral
-  function toggleMenu() {
-    const sidebar = document.getElementById('sidebar');
-    const content = document.getElementById('mainContent');
-    const toggleBtn = document.querySelector('.menu-toggle');
-    const closeArrow = document.getElementById('closeArrow');
-  
-    const isHidden = sidebar.classList.toggle('hidden');
-    content.classList.toggle('full-width');
-  
-    toggleBtn.style.display = isHidden ? 'block' : 'none';
-    closeArrow.classList.toggle('hidden', isHidden);
-  }
-  
+});
